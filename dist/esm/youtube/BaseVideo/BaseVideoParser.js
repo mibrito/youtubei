@@ -17,7 +17,7 @@ var BaseVideoParser = /** @class */ (function () {
     function BaseVideoParser() {
     }
     BaseVideoParser.loadBaseVideo = function (target, data) {
-        var _a, _b;
+        var _a, _b, _c, _d, _e;
         var videoInfo = BaseVideoParser.parseRawData(data);
         // Basic information
         target.id = videoInfo.videoDetails.videoId;
@@ -29,7 +29,7 @@ var BaseVideoParser = /** @class */ (function () {
         target.description = videoInfo.videoDetails.shortDescription;
         target.keywords = videoInfo.videoDetails.keywords;
         // Channel
-        var _c = videoInfo.owner.videoOwnerRenderer, title = _c.title, thumbnail = _c.thumbnail, subscriberCountText = _c.subscriberCountText;
+        var _f = videoInfo.owner.videoOwnerRenderer, title = _f.title, thumbnail = _f.thumbnail, subscriberCountText = _f.subscriberCountText;
         target.channel = new BaseChannel({
             client: target.client,
             id: title.runs[0].navigationEndpoint.browseEndpoint.browseId,
@@ -43,10 +43,8 @@ var BaseVideoParser = /** @class */ (function () {
         // Tags and description
         target.tags =
             ((_b = (_a = videoInfo.superTitleLink) === null || _a === void 0 ? void 0 : _a.runs) === null || _b === void 0 ? void 0 : _b.map(function (r) { return r.text.trim(); }).filter(function (t) { return t; })) || [];
-        console.log(data[3].response.contents.twoColumnWatchNextResults.secondaryResults);
         // related videos
-        var secondaryContents = data[3].response.contents.twoColumnWatchNextResults.secondaryResults.secondaryResults
-            .results;
+        var secondaryContents = (_e = (_d = (_c = data[3].response.contents.twoColumnWatchNextResults) === null || _c === void 0 ? void 0 : _c.secondaryResults) === null || _d === void 0 ? void 0 : _d.secondaryResults) === null || _e === void 0 ? void 0 : _e.results;
         if (secondaryContents) {
             target.related.items = BaseVideoParser.parseRelatedFromSecondaryContent(secondaryContents, target.client);
             target.related.continuation = getContinuationFromItems(secondaryContents);

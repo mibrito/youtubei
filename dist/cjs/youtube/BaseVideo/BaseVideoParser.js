@@ -7,7 +7,7 @@ const PlaylistCompact_1 = require("../PlaylistCompact");
 const VideoCompact_1 = require("../VideoCompact");
 class BaseVideoParser {
     static loadBaseVideo(target, data) {
-        var _a, _b;
+        var _a, _b, _c, _d, _e;
         const videoInfo = BaseVideoParser.parseRawData(data);
         // Basic information
         target.id = videoInfo.videoDetails.videoId;
@@ -33,10 +33,8 @@ class BaseVideoParser {
         // Tags and description
         target.tags =
             ((_b = (_a = videoInfo.superTitleLink) === null || _a === void 0 ? void 0 : _a.runs) === null || _b === void 0 ? void 0 : _b.map((r) => r.text.trim()).filter((t) => t)) || [];
-        console.log(data[3].response.contents.twoColumnWatchNextResults.secondaryResults);
         // related videos
-        const secondaryContents = data[3].response.contents.twoColumnWatchNextResults.secondaryResults.secondaryResults
-            .results;
+        const secondaryContents = (_e = (_d = (_c = data[3].response.contents.twoColumnWatchNextResults) === null || _c === void 0 ? void 0 : _c.secondaryResults) === null || _d === void 0 ? void 0 : _d.secondaryResults) === null || _e === void 0 ? void 0 : _e.results;
         if (secondaryContents) {
             target.related.items = BaseVideoParser.parseRelatedFromSecondaryContent(secondaryContents, target.client);
             target.related.continuation = (0, common_1.getContinuationFromItems)(secondaryContents);
