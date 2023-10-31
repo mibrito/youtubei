@@ -58,3 +58,12 @@ const run = async () => {
 
 run();
 ```
+
+
+## Test:
+
+```
+npm i -g esbuild
+export ESBUILD_BINARY_PATH=~/.nvm/versions/node/<node_version>/bin/esbuild
+npm i -g vitest
+```

@@ -4,6 +4,7 @@ import { MusicArtistCompact } from "../MusicArtistCompact";
 import { MusicBaseArtist } from "../MusicBaseArtist";
 import { MusicBaseChannel } from "../MusicBaseChannel";
 import { MusicPlaylistCompact } from "../MusicPlaylistCompact";
+import { MusicPodcastCompact } from "../MusicPodcastCompact";
 import { MusicSongCompact } from "../MusicSongCompact";
 import { MusicVideoCompact } from "../MusicVideoCompact";
 import { MusicClient } from "./MusicClient";
@@ -12,7 +13,7 @@ export class MusicSearchResultParser {
 	static parseSearchResult(
 		data: YoutubeRawData,
 		client: MusicClient
-	): Shelf<MusicVideoCompact[] | MusicAlbumCompact[] | MusicPlaylistCompact[]>[] {
+	): Shelf<MusicVideoCompact[] | MusicAlbumCompact[] | MusicPlaylistCompact[] | MusicPodcastCompact[]>[] {
 		const sectionListContents =
 			data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content
 				.sectionListRenderer.contents;
@@ -55,7 +56,7 @@ export class MusicSearchResultParser {
 			(c: YoutubeRawData) => c.musicResponsiveListItemFlexColumnRenderer.text.runs
 		);
 
-		const id = topColumn[0].navigationEndpoint.watchEndpoint.videoId;
+		const id = topColumn[0].navigationEndpoint?.watchEndpoint?.videoId;
 		const title = topColumn[0].text;
 		const duration = getDuration(bottomColumn.at(-1).text) || undefined;
 		const thumbnails = new Thumbnails().load(
@@ -72,16 +73,25 @@ export class MusicSearchResultParser {
 
 			const album = rawAlbum
 				? new MusicAlbumCompact({
-						client,
-						id: rawAlbum.navigationEndpoint.browseEndpoint.browseId,
-						title: rawAlbum.text,
-				  })
+					client,
+					id: rawAlbum.navigationEndpoint.browseEndpoint.browseId,
+					title: rawAlbum.text,
+				})
 				: undefined;
 
 			return new MusicSongCompact({
 				client,
 				id,
 				album,
+				title,
+				artists,
+				thumbnails,
+				duration,
+			});
+		} else if (pageType === "MUSIC_VIDEO_TYPE_PODCAST_EPISODE") {
+			return new MusicPodcastCompact({
+				client,
+				id: topColumn[0].navigationEndpoint?.browseEndpoint?.browseId,
 				title,
 				artists,
 				thumbnails,
