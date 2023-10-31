@@ -1,4 +1,4 @@
-import { RequestInit } from "node-fetch";
+import { HeadersInit, RequestInit } from "node-fetch";
 import { HTTP, Shelf } from "../../common";
 import { MusicAlbumCompact } from "../MusicAlbumCompact";
 import { MusicArtistCompact } from "../MusicArtistCompact";
@@ -11,6 +11,8 @@ export type MusicClientOptions = {
     fetchOptions: Partial<RequestInit>;
     /** Optional options passed when sending a request to youtube (context.client) */
     youtubeClientOptions: Record<string, unknown>;
+    /** Optional default headers */
+    defaultHeaders?: HeadersInit;
 };
 /** Youtube Music Client */
 export declare class MusicClient {
