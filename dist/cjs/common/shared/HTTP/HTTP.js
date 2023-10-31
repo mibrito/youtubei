@@ -25,12 +25,7 @@ class HTTP {
         this.clientName = options.clientName;
         this.clientVersion = options.clientVersion;
         this.cookie = options.initialCookie || "";
-        this.defaultHeaders = {
-            "x-youtube-client-version": this.clientVersion,
-            "x-youtube-client-name": "1",
-            "content-type": "application/json",
-            "accept-encoding": "gzip, deflate, br",
-        };
+        this.defaultHeaders = Object.assign({ "x-youtube-client-version": this.clientVersion, "x-youtube-client-name": "1", "content-type": "application/json", "accept-encoding": "gzip, deflate, br" }, options.defaultHeaders);
         this.defaultFetchOptions = options.fetchOptions || {};
         this.defaultClientOptions = options.youtubeClientOptions || {};
     }

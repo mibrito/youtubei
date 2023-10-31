@@ -1,4 +1,4 @@
-import { RequestInit } from "node-fetch";
+import { HeadersInit, RequestInit } from "node-fetch";
 import { HTTP } from "../../common";
 import { Channel } from "../Channel";
 import { LiveVideo } from "../LiveVideo";
@@ -13,6 +13,8 @@ export type ClientOptions = {
     fetchOptions: Partial<RequestInit>;
     /** Optional options passed when sending a request to youtube (context.client) */
     youtubeClientOptions: Record<string, unknown>;
+    /** Optional default headers */
+    defaultHeaders?: HeadersInit;
 };
 /** Youtube Client */
 export declare class Client {

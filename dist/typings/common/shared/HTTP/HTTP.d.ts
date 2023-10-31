@@ -1,4 +1,4 @@
-import { RequestInit } from "node-fetch";
+import { HeadersInit, RequestInit } from "node-fetch";
 type HTTPOptions = {
     apiKey: string;
     baseUrl: string;
@@ -7,6 +7,7 @@ type HTTPOptions = {
     fetchOptions?: Partial<RequestInit>;
     youtubeClientOptions?: Record<string, unknown>;
     initialCookie?: string;
+    defaultHeaders?: HeadersInit;
 };
 type Response<T = any> = {
     data: T;
