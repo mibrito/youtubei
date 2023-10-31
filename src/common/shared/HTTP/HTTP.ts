@@ -9,6 +9,7 @@ type HTTPOptions = {
 	fetchOptions?: Partial<RequestInit>;
 	youtubeClientOptions?: Record<string, unknown>;
 	initialCookie?: string;
+	defaultHeaders?: HeadersInit;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -45,6 +46,7 @@ export class HTTP {
 			"x-youtube-client-name": "1",
 			"content-type": "application/json",
 			"accept-encoding": "gzip, deflate, br",
+			...options.defaultHeaders
 		};
 		this.defaultFetchOptions = options.fetchOptions || {};
 		this.defaultClientOptions = options.youtubeClientOptions || {};
