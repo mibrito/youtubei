@@ -48,7 +48,6 @@ export class HTTP {
 			"accept-encoding": "gzip, deflate, br",
 			...options.defaultHeaders
 		};
-		console.log(this.defaultHeaders)
 		this.defaultFetchOptions = options.fetchOptions || {};
 		this.defaultClientOptions = options.youtubeClientOptions || {};
 	}
