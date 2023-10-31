@@ -43,6 +43,7 @@ var BaseVideoParser = /** @class */ (function () {
         // Tags and description
         target.tags =
             ((_b = (_a = videoInfo.superTitleLink) === null || _a === void 0 ? void 0 : _a.runs) === null || _b === void 0 ? void 0 : _b.map(function (r) { return r.text.trim(); }).filter(function (t) { return t; })) || [];
+        console.log(data[3].response.contents.twoColumnWatchNextResults.secondaryResults);
         // related videos
         var secondaryContents = data[3].response.contents.twoColumnWatchNextResults.secondaryResults.secondaryResults
             .results;
@@ -61,7 +62,6 @@ var BaseVideoParser = /** @class */ (function () {
         return getContinuationFromItems(secondaryContents);
     };
     BaseVideoParser.parseRawData = function (data) {
-        console.log(data);
         var contents = data[3].response.contents.twoColumnWatchNextResults.results.results.contents;
         var primaryInfo = contents.find(function (c) { return "videoPrimaryInfoRenderer" in c; })
             .videoPrimaryInfoRenderer;
