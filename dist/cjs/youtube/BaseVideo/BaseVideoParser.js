@@ -7,7 +7,7 @@ const PlaylistCompact_1 = require("../PlaylistCompact");
 const VideoCompact_1 = require("../VideoCompact");
 class BaseVideoParser {
     static loadBaseVideo(target, data) {
-        var _a, _b, _c;
+        var _a, _b;
         const videoInfo = BaseVideoParser.parseRawData(data);
         // Basic information
         target.id = videoInfo.videoDetails.videoId;
@@ -16,6 +16,8 @@ class BaseVideoParser {
         target.viewCount = +videoInfo.videoDetails.viewCount || null;
         target.isLiveContent = videoInfo.videoDetails.isLiveContent;
         target.thumbnails = new common_1.Thumbnails().load(videoInfo.videoDetails.thumbnail.thumbnails);
+        target.description = videoInfo.videoDetails.shortDescription;
+        target.keywords = videoInfo.videoDetails.keywords;
         // Channel
         const { title, thumbnail, subscriberCountText } = videoInfo.owner.videoOwnerRenderer;
         target.channel = new BaseChannel_1.BaseChannel({
@@ -31,8 +33,6 @@ class BaseVideoParser {
         // Tags and description
         target.tags =
             ((_b = (_a = videoInfo.superTitleLink) === null || _a === void 0 ? void 0 : _a.runs) === null || _b === void 0 ? void 0 : _b.map((r) => r.text.trim()).filter((t) => t)) || [];
-        target.description =
-            ((_c = videoInfo.description) === null || _c === void 0 ? void 0 : _c.runs.map((d) => d.text).join("")) || "";
         // related videos
         const secondaryContents = data[3].response.contents.twoColumnWatchNextResults.secondaryResults.secondaryResults
             .results;
