@@ -61,6 +61,7 @@ var BaseVideoParser = /** @class */ (function () {
         return getContinuationFromItems(secondaryContents);
     };
     BaseVideoParser.parseRawData = function (data) {
+        console.log(data);
         var contents = data[3].response.contents.twoColumnWatchNextResults.results.results.contents;
         var primaryInfo = contents.find(function (c) { return "videoPrimaryInfoRenderer" in c; })
             .videoPrimaryInfoRenderer;

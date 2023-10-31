@@ -51,6 +51,7 @@ class BaseVideoParser {
         return (0, common_1.getContinuationFromItems)(secondaryContents);
     }
     static parseRawData(data) {
+        console.log(data);
         const contents = data[3].response.contents.twoColumnWatchNextResults.results.results.contents;
         const primaryInfo = contents.find((c) => "videoPrimaryInfoRenderer" in c)
             .videoPrimaryInfoRenderer;
