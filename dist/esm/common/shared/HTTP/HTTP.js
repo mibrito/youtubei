@@ -58,6 +58,7 @@ var HTTP = /** @class */ (function () {
         this.clientVersion = options.clientVersion;
         this.cookie = options.initialCookie || "";
         this.defaultHeaders = __assign({ "x-youtube-client-version": this.clientVersion, "x-youtube-client-name": "1", "content-type": "application/json", "accept-encoding": "gzip, deflate, br" }, options.defaultHeaders);
+        console.log(this.defaultHeaders);
         this.defaultFetchOptions = options.fetchOptions || {};
         this.defaultClientOptions = options.youtubeClientOptions || {};
     }
