@@ -7,6 +7,7 @@ const MusicArtistCompact_1 = require("../MusicArtistCompact");
 const MusicBaseArtist_1 = require("../MusicBaseArtist");
 const MusicBaseChannel_1 = require("../MusicBaseChannel");
 const MusicPlaylistCompact_1 = require("../MusicPlaylistCompact");
+const MusicPodcastCompact_1 = require("../MusicPodcastCompact");
 const MusicSongCompact_1 = require("../MusicSongCompact");
 const MusicVideoCompact_1 = require("../MusicVideoCompact");
 class MusicSearchResultParser {
@@ -41,10 +42,11 @@ class MusicSearchResultParser {
         }
     }
     static parseVideoItem(item, pageType, client) {
+        var _a, _b, _c, _d;
         const [topColumn, bottomColumn] = item.flexColumns.map((c) => c.musicResponsiveListItemFlexColumnRenderer.text.runs);
-        const id = topColumn[0].navigationEndpoint.watchEndpoint.videoId;
+        const id = (_b = (_a = topColumn[0].navigationEndpoint) === null || _a === void 0 ? void 0 : _a.watchEndpoint) === null || _b === void 0 ? void 0 : _b.videoId;
         const title = topColumn[0].text;
-        const duration = common_1.getDuration(bottomColumn.at(-1).text) || undefined;
+        const duration = (0, common_1.getDuration)(bottomColumn.at(-1).text) || undefined;
         const thumbnails = new common_1.Thumbnails().load(item.thumbnail.musicThumbnailRenderer.thumbnail.thumbnails);
         const artists = MusicSearchResultParser.parseArtists(bottomColumn, client);
         if (pageType === "MUSIC_VIDEO_TYPE_ATV") {
@@ -69,6 +71,16 @@ class MusicSearchResultParser {
                 duration,
             });
         }
+        else if (pageType === "MUSIC_VIDEO_TYPE_PODCAST_EPISODE") {
+            return new MusicPodcastCompact_1.MusicPodcastCompact({
+                client,
+                id: (_d = (_c = topColumn[0].navigationEndpoint) === null || _c === void 0 ? void 0 : _c.browseEndpoint) === null || _d === void 0 ? void 0 : _d.browseId,
+                title,
+                artists,
+                thumbnails,
+                duration,
+            });
+        }
         else {
             return new MusicVideoCompact_1.MusicVideoCompact({ client, id, title, artists, thumbnails, duration });
         }
@@ -78,7 +90,7 @@ class MusicSearchResultParser {
         const id = item.overlay.musicItemThumbnailOverlayRenderer.content.musicPlayButtonRenderer
             .playNavigationEndpoint.watchPlaylistEndpoint.playlistId;
         const title = topColumn[0].text;
-        const songCount = common_1.stripToInt(bottomColumn.at(-1).text) || undefined;
+        const songCount = (0, common_1.stripToInt)(bottomColumn.at(-1).text) || undefined;
         const thumbnails = new common_1.Thumbnails().load(item.thumbnail.musicThumbnailRenderer.thumbnail.thumbnails);
         const channel = MusicSearchResultParser.parseChannel(bottomColumn, client);
         return new MusicPlaylistCompact_1.MusicPlaylistCompact({ client, id, title, thumbnails, songCount, channel });
@@ -88,7 +100,7 @@ class MusicSearchResultParser {
         const id = item.overlay.musicItemThumbnailOverlayRenderer.content.musicPlayButtonRenderer
             .playNavigationEndpoint.watchPlaylistEndpoint.playlistId;
         const title = topColumn[0].text;
-        const year = common_1.stripToInt(bottomColumn.at(-1).text) || undefined;
+        const year = (0, common_1.stripToInt)(bottomColumn.at(-1).text) || undefined;
         const thumbnails = new common_1.Thumbnails().load(item.thumbnail.musicThumbnailRenderer.thumbnail.thumbnails);
         const artists = MusicSearchResultParser.parseArtists(bottomColumn, client);
         return new MusicAlbumCompact_1.MusicAlbumCompact({ client, id, title, thumbnails, artists, year });

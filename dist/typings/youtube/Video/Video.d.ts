@@ -2,7 +2,7 @@ import { Thumbnails, YoutubeRawData } from "../../common";
 import { BaseVideo, BaseVideoProperties } from "../BaseVideo";
 import { Transcript } from "../Transcript";
 import { VideoComments } from "./VideoComments";
-export declare type Chapter = {
+export type Chapter = {
     title: string;
     start: number;
     thumbnails: Thumbnails;

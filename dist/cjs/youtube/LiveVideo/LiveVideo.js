@@ -81,4 +81,4 @@ class LiveVideo extends BaseVideo_1.BaseVideo {
     }
 }
 exports.LiveVideo = LiveVideo;
-common_1.applyMixins(LiveVideo, [events_1.EventEmitter]);
+(0, common_1.applyMixins)(LiveVideo, [events_1.EventEmitter]);

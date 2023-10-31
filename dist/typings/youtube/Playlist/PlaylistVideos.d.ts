@@ -1,7 +1,7 @@
 import { Continuable, ContinuableConstructorParams, FetchResult } from "../Continuable";
 import { VideoCompact } from "../VideoCompact";
 import { Playlist } from "./Playlist";
-declare type ConstructorParams = ContinuableConstructorParams & {
+type ConstructorParams = ContinuableConstructorParams & {
     playlist?: Playlist;
 };
 /**

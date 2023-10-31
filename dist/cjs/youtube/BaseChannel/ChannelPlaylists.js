@@ -45,8 +45,8 @@ class ChannelPlaylists extends Continuable_1.Continuable {
                 data: { browseId: (_a = this.channel) === null || _a === void 0 ? void 0 : _a.id, params, continuation: this.continuation },
             });
             const items = BaseChannelParser_1.BaseChannelParser.parseTabData("playlists", response.data);
-            const continuation = common_1.getContinuationFromItems(items);
-            const data = common_1.mapFilter(items, "gridPlaylistRenderer");
+            const continuation = (0, common_1.getContinuationFromItems)(items);
+            const data = (0, common_1.mapFilter)(items, "gridPlaylistRenderer");
             return {
                 continuation,
                 items: data.map((i) => new PlaylistCompact_1.PlaylistCompact({ client: this.client, channel: this.channel }).load(i)),

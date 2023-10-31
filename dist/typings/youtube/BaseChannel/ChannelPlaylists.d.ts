@@ -1,7 +1,7 @@
 import { Continuable, ContinuableConstructorParams, FetchResult } from "../Continuable";
 import { PlaylistCompact } from "../PlaylistCompact";
 import { BaseChannel } from "./BaseChannel";
-declare type ConstructorParams = ContinuableConstructorParams & {
+type ConstructorParams = ContinuableConstructorParams & {
     channel?: BaseChannel;
 };
 /**

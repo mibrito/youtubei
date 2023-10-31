@@ -20,6 +20,7 @@ import { MusicArtistCompact } from "../MusicArtistCompact";
 import { MusicBaseArtist } from "../MusicBaseArtist";
 import { MusicBaseChannel } from "../MusicBaseChannel";
 import { MusicPlaylistCompact } from "../MusicPlaylistCompact";
+import { MusicPodcastCompact } from "../MusicPodcastCompact";
 import { MusicSongCompact } from "../MusicSongCompact";
 import { MusicVideoCompact } from "../MusicVideoCompact";
 var MusicSearchResultParser = /** @class */ (function () {
@@ -58,8 +59,9 @@ var MusicSearchResultParser = /** @class */ (function () {
         }
     };
     MusicSearchResultParser.parseVideoItem = function (item, pageType, client) {
-        var _a = __read(item.flexColumns.map(function (c) { return c.musicResponsiveListItemFlexColumnRenderer.text.runs; }), 2), topColumn = _a[0], bottomColumn = _a[1];
-        var id = topColumn[0].navigationEndpoint.watchEndpoint.videoId;
+        var _a, _b, _c, _d;
+        var _e = __read(item.flexColumns.map(function (c) { return c.musicResponsiveListItemFlexColumnRenderer.text.runs; }), 2), topColumn = _e[0], bottomColumn = _e[1];
+        var id = (_b = (_a = topColumn[0].navigationEndpoint) === null || _a === void 0 ? void 0 : _a.watchEndpoint) === null || _b === void 0 ? void 0 : _b.videoId;
         var title = topColumn[0].text;
         var duration = getDuration(bottomColumn.at(-1).text) || undefined;
         var thumbnails = new Thumbnails().load(item.thumbnail.musicThumbnailRenderer.thumbnail.thumbnails);
@@ -80,6 +82,16 @@ var MusicSearchResultParser = /** @class */ (function () {
                 client: client,
                 id: id,
                 album: album,
+                title: title,
+                artists: artists,
+                thumbnails: thumbnails,
+                duration: duration,
+            });
+        }
+        else if (pageType === "MUSIC_VIDEO_TYPE_PODCAST_EPISODE") {
+            return new MusicPodcastCompact({
+                client: client,
+                id: (_d = (_c = topColumn[0].navigationEndpoint) === null || _c === void 0 ? void 0 : _c.browseEndpoint) === null || _d === void 0 ? void 0 : _d.browseId,
                 title: title,
                 artists: artists,
                 thumbnails: thumbnails,

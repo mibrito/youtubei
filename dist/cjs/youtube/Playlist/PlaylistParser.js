@@ -41,16 +41,16 @@ class PlaylistParser {
         }
         // Videos
         target.videos.items = PlaylistParser.parseVideos(playlistContents, target);
-        target.videos.continuation = common_1.getContinuationFromItems(playlistContents);
+        target.videos.continuation = (0, common_1.getContinuationFromItems)(playlistContents);
         return target;
     }
     static parseVideoContinuation(data) {
         const playlistContents = data.onResponseReceivedActions[0].appendContinuationItemsAction.continuationItems;
-        return common_1.getContinuationFromItems(playlistContents);
+        return (0, common_1.getContinuationFromItems)(playlistContents);
     }
     static parseContinuationVideos(data, client) {
         const playlistContents = data.onResponseReceivedActions[0].appendContinuationItemsAction.continuationItems;
-        const videos = common_1.mapFilter(playlistContents, "playlistVideoRenderer");
+        const videos = (0, common_1.mapFilter)(playlistContents, "playlistVideoRenderer");
         return videos.map((video) => new VideoCompact_1.VideoCompact({ client }).load(video));
     }
     /**

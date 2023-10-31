@@ -11,14 +11,14 @@ class SearchResultParser {
             .contents;
         return {
             data: SearchResultParser.parseSearchResult(sectionListContents, client),
-            continuation: common_1.getContinuationFromItems(sectionListContents),
+            continuation: (0, common_1.getContinuationFromItems)(sectionListContents),
         };
     }
     static parseContinuationSearchResult(data, client) {
         const sectionListContents = data.onResponseReceivedCommands[0].appendContinuationItemsAction.continuationItems;
         return {
             data: SearchResultParser.parseSearchResult(sectionListContents, client),
-            continuation: common_1.getContinuationFromItems(sectionListContents),
+            continuation: (0, common_1.getContinuationFromItems)(sectionListContents),
         };
     }
     static parseSearchResult(sectionListContents, client) {

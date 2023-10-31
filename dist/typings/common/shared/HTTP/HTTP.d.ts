@@ -1,5 +1,5 @@
 import { RequestInit } from "node-fetch";
-declare type HTTPOptions = {
+type HTTPOptions = {
     apiKey: string;
     baseUrl: string;
     clientName: string;
@@ -8,10 +8,10 @@ declare type HTTPOptions = {
     youtubeClientOptions?: Record<string, unknown>;
     initialCookie?: string;
 };
-declare type Response<T = any> = {
+type Response<T = any> = {
     data: T;
 };
-declare type Options = {
+type Options = {
     data: Record<string, unknown>;
     params: Record<string, string>;
 } & RequestInit;

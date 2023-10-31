@@ -1,7 +1,7 @@
 import { Comment } from "../Comment";
 import { Continuable, ContinuableConstructorParams, FetchResult } from "../Continuable";
 import { Video } from "./Video";
-declare type ConstructorParams = ContinuableConstructorParams & {
+type ConstructorParams = ContinuableConstructorParams & {
     video: Video;
 };
 /**

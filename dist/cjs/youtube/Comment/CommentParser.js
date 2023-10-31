@@ -17,7 +17,7 @@ class CommentParser {
         target.replyCount = replyCount;
         // Reply Continuation
         target.replies.continuation = data.replies
-            ? common_1.getContinuationFromItems(data.replies.commentRepliesRenderer.contents)
+            ? (0, common_1.getContinuationFromItems)(data.replies.commentRepliesRenderer.contents)
             : undefined;
         // Author
         const { browseId } = authorEndpoint.browseEndpoint;
@@ -31,11 +31,11 @@ class CommentParser {
     }
     static parseContinuation(data) {
         const continuationItems = data.onResponseReceivedEndpoints[0].appendContinuationItemsAction.continuationItems;
-        return common_1.getContinuationFromItems(continuationItems, ["button", "buttonRenderer", "command"]);
+        return (0, common_1.getContinuationFromItems)(continuationItems, ["button", "buttonRenderer", "command"]);
     }
     static parseReplies(data, comment) {
         const continuationItems = data.onResponseReceivedEndpoints[0].appendContinuationItemsAction.continuationItems;
-        const rawReplies = common_1.mapFilter(continuationItems, "commentRenderer");
+        const rawReplies = (0, common_1.mapFilter)(continuationItems, "commentRenderer");
         return rawReplies.map((i) => new Reply_1.Reply({ video: comment.video, comment, client: comment.client }).load(i));
     }
 }

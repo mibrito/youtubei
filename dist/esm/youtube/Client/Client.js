@@ -24,7 +24,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -110,7 +110,7 @@ var Client = /** @class */ (function () {
                 switch (_d.label) {
                     case 0:
                         if (!playlistId.startsWith("RD")) return [3 /*break*/, 2];
-                        return [4 /*yield*/, this.http.post(I_END_POINT + "/next", {
+                        return [4 /*yield*/, this.http.post("".concat(I_END_POINT, "/next"), {
                                 data: { playlistId: playlistId },
                             })];
                     case 1:
@@ -119,8 +119,8 @@ var Client = /** @class */ (function () {
                             return [2 /*return*/, undefined];
                         }
                         return [2 /*return*/, new MixPlaylist({ client: this }).load(response_1.data)];
-                    case 2: return [4 /*yield*/, this.http.post(I_END_POINT + "/browse", {
-                            data: { browseId: "VL" + playlistId },
+                    case 2: return [4 /*yield*/, this.http.post("".concat(I_END_POINT, "/browse"), {
+                            data: { browseId: "VL".concat(playlistId) },
                         })];
                     case 3:
                         response = _d.sent();
@@ -138,7 +138,7 @@ var Client = /** @class */ (function () {
             var response;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.http.get("" + WATCH_END_POINT, {
+                    case 0: return [4 /*yield*/, this.http.get("".concat(WATCH_END_POINT), {
                             params: { v: videoId, pbj: "1" },
                         })];
                     case 1:
@@ -159,7 +159,7 @@ var Client = /** @class */ (function () {
             var response;
             return __generator(this, function (_d) {
                 switch (_d.label) {
-                    case 0: return [4 /*yield*/, this.http.post(I_END_POINT + "/browse", {
+                    case 0: return [4 /*yield*/, this.http.post("".concat(I_END_POINT, "/browse"), {
                             data: { browseId: channelId },
                         })];
                     case 1:
@@ -179,7 +179,7 @@ var Client = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         bufferParams = TranscriptParamsProto.TranscriptParams.encode({ videoId: videoId });
-                        return [4 /*yield*/, this.http.post(I_END_POINT + "/get_transcript", {
+                        return [4 /*yield*/, this.http.post("".concat(I_END_POINT, "/get_transcript"), {
                                 data: { params: Buffer.from(bufferParams).toString("base64") },
                             })];
                     case 1:

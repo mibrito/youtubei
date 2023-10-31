@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.optionsToProto = exports.SearchProto = void 0;
 const protocol_buffers_1 = __importDefault(require("protocol-buffers"));
 // TODO move this to .proto file
-exports.SearchProto = protocol_buffers_1.default(`
+exports.SearchProto = (0, protocol_buffers_1.default)(`
 	message SearchOptions {
 		message Options {
 			optional int32 uploadDate = 1;

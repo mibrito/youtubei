@@ -13,7 +13,8 @@ var VideoCompactParser = /** @class */ (function () {
         target.description =
             ((_b = detailedMetadataSnippets === null || detailedMetadataSnippets === void 0 ? void 0 : detailedMetadataSnippets[0].snippetText.runs) === null || _b === void 0 ? void 0 : _b.map(function (r) { return r.text; }).join("")) || "";
         target.duration =
-            getDuration((lengthText === null || lengthText === void 0 ? void 0 : lengthText.simpleText) || ((_c = thumbnailOverlays === null || thumbnailOverlays === void 0 ? void 0 : thumbnailOverlays[0].thumbnailOverlayTimeStatusRenderer) === null || _c === void 0 ? void 0 : _c.text.simpleText) ||
+            getDuration((lengthText === null || lengthText === void 0 ? void 0 : lengthText.simpleText) ||
+                ((_c = thumbnailOverlays === null || thumbnailOverlays === void 0 ? void 0 : thumbnailOverlays[0].thumbnailOverlayTimeStatusRenderer) === null || _c === void 0 ? void 0 : _c.text.simpleText) ||
                 "") || null;
         target.isLive = !!((badges === null || badges === void 0 ? void 0 : badges[0].metadataBadgeRenderer.style) === "BADGE_STYLE_TYPE_LIVE_NOW");
         // Channel

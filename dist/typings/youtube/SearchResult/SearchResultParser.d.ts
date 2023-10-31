@@ -1,7 +1,7 @@
 import { YoutubeRawData } from "../../common";
 import { Client } from "../Client";
 import { SearchResultItem } from "./SearchResult";
-declare type ParseReturnType = {
+type ParseReturnType = {
     data: SearchResultItem[];
     continuation: string | undefined;
 };

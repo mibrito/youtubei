@@ -2,7 +2,7 @@ import { Shelf, Thumbnails, YoutubeRawData } from "../../common";
 import { BaseChannel, BaseChannelProperties } from "../BaseChannel";
 import { PlaylistCompact } from "../PlaylistCompact";
 import { VideoCompact } from "../VideoCompact";
-export declare type ChannelShelf = Shelf<BaseChannel[] | VideoCompact[] | PlaylistCompact[]> & {
+export type ChannelShelf = Shelf<BaseChannel[] | VideoCompact[] | PlaylistCompact[]> & {
     subtitle?: string;
 };
 /** @hidden */

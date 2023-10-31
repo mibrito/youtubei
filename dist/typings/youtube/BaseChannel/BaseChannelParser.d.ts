@@ -1,6 +1,6 @@
 import { YoutubeRawData } from "../../common";
 import { BaseChannel } from "./BaseChannel";
-declare type TabType = keyof typeof BaseChannelParser.TAB_TYPE_PARAMS;
+type TabType = keyof typeof BaseChannelParser.TAB_TYPE_PARAMS;
 export declare class BaseChannelParser {
     static TAB_TYPE_PARAMS: {
         readonly videos: "EgZ2aWRlb3PyBgQKAjoA";

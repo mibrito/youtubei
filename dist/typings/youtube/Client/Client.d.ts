@@ -7,7 +7,7 @@ import { Playlist } from "../Playlist";
 import { SearchOptions, SearchResult, SearchResultItem } from "../SearchResult";
 import { Transcript } from "../Transcript";
 import { Video } from "../Video";
-export declare type ClientOptions = {
+export type ClientOptions = {
     initialCookie: string;
     /** Optional options for http client */
     fetchOptions: Partial<RequestInit>;

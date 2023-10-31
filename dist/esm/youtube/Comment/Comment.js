@@ -6,6 +6,8 @@ var __extends = (this && this.__extends) || (function () {
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -36,7 +38,7 @@ var Comment = /** @class */ (function (_super) {
     Object.defineProperty(Comment.prototype, "url", {
         /** URL to the video with this comment being highlighted (appears on top of the comment section) */
         get: function () {
-            return "https://www.youtube.com/watch?v=" + this.video.id + "&lc=" + this.id;
+            return "https://www.youtube.com/watch?v=".concat(this.video.id, "&lc=").concat(this.id);
         },
         enumerable: false,
         configurable: true

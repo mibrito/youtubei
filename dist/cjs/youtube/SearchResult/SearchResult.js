@@ -61,7 +61,7 @@ var SearchEnum;
         Feature["HDR"] = "hdr";
         Feature["Location"] = "location";
     })(Feature = SearchEnum.Feature || (SearchEnum.Feature = {}));
-})(SearchEnum = exports.SearchEnum || (exports.SearchEnum = {}));
+})(SearchEnum || (exports.SearchEnum = SearchEnum = {}));
 /**
  * Represents search result, usually returned from `client.search();`.
  *
@@ -101,7 +101,7 @@ class SearchResult extends Continuable_1.Continuable {
         return __awaiter(this, void 0, void 0, function* () {
             this.items = [];
             this.estimatedResults = 0;
-            const bufferParams = proto_1.SearchProto.SearchOptions.encode(proto_1.optionsToProto(options));
+            const bufferParams = proto_1.SearchProto.SearchOptions.encode((0, proto_1.optionsToProto)(options));
             const response = yield this.client.http.post(`${constants_1.I_END_POINT}/search`, {
                 data: {
                     query,

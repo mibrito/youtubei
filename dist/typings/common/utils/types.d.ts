@@ -1,1 +1,1 @@
-export declare type YoutubeRawData = Record<string, any>;
+export type YoutubeRawData = Record<string, any>;

@@ -6,6 +6,8 @@ var __extends = (this && this.__extends) || (function () {
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -33,9 +35,14 @@ var __read = (this && this.__read) || function (o, n) {
     }
     return ar;
 };
-var __spread = (this && this.__spread) || function () {
-    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read(arguments[i]));
-    return ar;
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
 };
 import { extendsBuiltIn } from "../../utils";
 /**
@@ -88,15 +95,15 @@ var Thumbnails = /** @class */ (function (_super) {
      * @hidden
      */
     Thumbnails.prototype.load = function (thumbnails) {
-        this.push.apply(this, __spread(thumbnails));
+        this.push.apply(this, __spreadArray([], __read(thumbnails), false));
         return this;
     };
     Thumbnails.parseThumbnailUrl = function (_a) {
         var url = _a.url;
         if (url.startsWith("//"))
-            return "https:" + url;
+            return "https:".concat(url);
         if (!url.startsWith("https://"))
-            return "https://" + url;
+            return "https://".concat(url);
         else
             return url;
     };

@@ -14,7 +14,8 @@ class VideoCompactParser {
         target.description =
             ((_b = detailedMetadataSnippets === null || detailedMetadataSnippets === void 0 ? void 0 : detailedMetadataSnippets[0].snippetText.runs) === null || _b === void 0 ? void 0 : _b.map((r) => r.text).join("")) || "";
         target.duration =
-            common_1.getDuration((lengthText === null || lengthText === void 0 ? void 0 : lengthText.simpleText) || ((_c = thumbnailOverlays === null || thumbnailOverlays === void 0 ? void 0 : thumbnailOverlays[0].thumbnailOverlayTimeStatusRenderer) === null || _c === void 0 ? void 0 : _c.text.simpleText) ||
+            (0, common_1.getDuration)((lengthText === null || lengthText === void 0 ? void 0 : lengthText.simpleText) ||
+                ((_c = thumbnailOverlays === null || thumbnailOverlays === void 0 ? void 0 : thumbnailOverlays[0].thumbnailOverlayTimeStatusRenderer) === null || _c === void 0 ? void 0 : _c.text.simpleText) ||
                 "") || null;
         target.isLive = !!((badges === null || badges === void 0 ? void 0 : badges[0].metadataBadgeRenderer.style) === "BADGE_STYLE_TYPE_LIVE_NOW");
         // Channel
@@ -32,7 +33,7 @@ class VideoCompactParser {
                 });
             }
         }
-        target.viewCount = common_1.stripToInt((viewCountText === null || viewCountText === void 0 ? void 0 : viewCountText.simpleText) || (viewCountText === null || viewCountText === void 0 ? void 0 : viewCountText.runs[0].text));
+        target.viewCount = (0, common_1.stripToInt)((viewCountText === null || viewCountText === void 0 ? void 0 : viewCountText.simpleText) || (viewCountText === null || viewCountText === void 0 ? void 0 : viewCountText.runs[0].text));
         return target;
     }
 }

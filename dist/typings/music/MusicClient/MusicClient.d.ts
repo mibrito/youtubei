@@ -5,7 +5,7 @@ import { MusicArtistCompact } from "../MusicArtistCompact";
 import { MusicLyrics } from "../MusicLyrics";
 import { MusicPlaylistCompact } from "../MusicPlaylistCompact";
 import { MusicVideoCompact } from "../MusicVideoCompact";
-export declare type MusicClientOptions = {
+export type MusicClientOptions = {
     initialCookie: string;
     /** Optional options for http client */
     fetchOptions: Partial<RequestInit>;

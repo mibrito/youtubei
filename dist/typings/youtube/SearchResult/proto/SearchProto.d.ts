@@ -1,4 +1,4 @@
-declare type Options = {
+type Options = {
     uploadDate?: number;
     type?: number;
     duration?: number;
@@ -13,11 +13,11 @@ declare type Options = {
     hdr?: number;
     location?: number;
 };
-declare type SearchOptions = {
+type SearchOptions = {
     sortBy?: number;
     options?: Options;
 };
-export declare type SearchProto = {
+export type SearchProto = {
     SearchOptions: SearchOptions;
 };
 export {};

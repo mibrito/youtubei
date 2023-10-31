@@ -7,7 +7,7 @@ const PlaylistCompact_1 = require("../PlaylistCompact");
 const VideoCompact_1 = require("../VideoCompact");
 class BaseVideoParser {
     static loadBaseVideo(target, data) {
-        var _a, _b, _c;
+        var _a, _b;
         const videoInfo = BaseVideoParser.parseRawData(data);
         // Basic information
         target.id = videoInfo.videoDetails.videoId;
@@ -16,6 +16,8 @@ class BaseVideoParser {
         target.viewCount = +videoInfo.videoDetails.viewCount || null;
         target.isLiveContent = videoInfo.videoDetails.isLiveContent;
         target.thumbnails = new common_1.Thumbnails().load(videoInfo.videoDetails.thumbnail.thumbnails);
+        target.description = videoInfo.videoDetails.shortDescription;
+        target.keywords = videoInfo.videoDetails.keywords;
         // Channel
         const { title, thumbnail, subscriberCountText } = videoInfo.owner.videoOwnerRenderer;
         target.channel = new BaseChannel_1.BaseChannel({
@@ -27,18 +29,16 @@ class BaseVideoParser {
         });
         // Like Count and Dislike Count
         const topLevelButtons = videoInfo.videoActions.menuRenderer.topLevelButtons;
-        target.likeCount = common_1.stripToInt(BaseVideoParser.parseButtonRenderer(topLevelButtons[0]));
+        target.likeCount = (0, common_1.stripToInt)(BaseVideoParser.parseButtonRenderer(topLevelButtons[0]));
         // Tags and description
         target.tags =
             ((_b = (_a = videoInfo.superTitleLink) === null || _a === void 0 ? void 0 : _a.runs) === null || _b === void 0 ? void 0 : _b.map((r) => r.text.trim()).filter((t) => t)) || [];
-        target.description =
-            ((_c = videoInfo.description) === null || _c === void 0 ? void 0 : _c.runs.map((d) => d.text).join("")) || "";
         // related videos
         const secondaryContents = data[3].response.contents.twoColumnWatchNextResults.secondaryResults.secondaryResults
             .results;
         if (secondaryContents) {
             target.related.items = BaseVideoParser.parseRelatedFromSecondaryContent(secondaryContents, target.client);
-            target.related.continuation = common_1.getContinuationFromItems(secondaryContents);
+            target.related.continuation = (0, common_1.getContinuationFromItems)(secondaryContents);
         }
         return target;
     }
@@ -48,7 +48,7 @@ class BaseVideoParser {
     }
     static parseContinuation(data) {
         const secondaryContents = data.onResponseReceivedEndpoints[0].appendContinuationItemsAction.continuationItems;
-        return common_1.getContinuationFromItems(secondaryContents);
+        return (0, common_1.getContinuationFromItems)(secondaryContents);
     }
     static parseRawData(data) {
         const contents = data[3].response.contents.twoColumnWatchNextResults.results.results.contents;

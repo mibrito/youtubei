@@ -6,6 +6,8 @@ var __extends = (this && this.__extends) || (function () {
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -26,7 +28,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -63,9 +65,14 @@ var __read = (this && this.__read) || function (o, n) {
     }
     return ar;
 };
-var __spread = (this && this.__spread) || function () {
-    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read(arguments[i]));
-    return ar;
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
 };
 import { Continuable } from "../Continuable";
 import { I_END_POINT } from "../constants";
@@ -166,7 +173,7 @@ var SearchResult = /** @class */ (function (_super) {
                         this.items = [];
                         this.estimatedResults = 0;
                         bufferParams = SearchProto.SearchOptions.encode(optionsToProto(options));
-                        return [4 /*yield*/, this.client.http.post(I_END_POINT + "/search", {
+                        return [4 /*yield*/, this.client.http.post("".concat(I_END_POINT, "/search"), {
                                 data: {
                                     query: query,
                                     params: Buffer.from(bufferParams).toString("base64"),
@@ -177,7 +184,7 @@ var SearchResult = /** @class */ (function (_super) {
                         this.estimatedResults = +response.data.estimatedResults;
                         if (this.estimatedResults > 0) {
                             _a = SearchResultParser.parseInitialSearchResult(response.data, this.client), data = _a.data, continuation = _a.continuation;
-                            (_b = this.items).push.apply(_b, __spread(data));
+                            (_b = this.items).push.apply(_b, __spreadArray([], __read(data), false));
                             this.continuation = continuation;
                         }
                         return [2 /*return*/, this];
@@ -190,7 +197,7 @@ var SearchResult = /** @class */ (function (_super) {
             var response, _a, data, continuation;
             return __generator(this, function (_b) {
                 switch (_b.label) {
-                    case 0: return [4 /*yield*/, this.client.http.post(I_END_POINT + "/search", {
+                    case 0: return [4 /*yield*/, this.client.http.post("".concat(I_END_POINT, "/search"), {
                             data: { continuation: this.continuation },
                         })];
                     case 1:

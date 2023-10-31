@@ -61,7 +61,7 @@ let Thumbnails = Thumbnails_1 = class Thumbnails extends Array {
             return url;
     }
 };
-Thumbnails = Thumbnails_1 = __decorate([
-    utils_1.extendsBuiltIn()
-], Thumbnails);
 exports.Thumbnails = Thumbnails;
+exports.Thumbnails = Thumbnails = Thumbnails_1 = __decorate([
+    (0, utils_1.extendsBuiltIn)()
+], Thumbnails);

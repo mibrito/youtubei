@@ -1,12 +1,12 @@
 import { Base } from "../Base";
 import { Client } from "../Client";
 /** @hidden */
-export declare type FetchResult<T> = {
+export type FetchResult<T> = {
     items: T[];
     continuation?: string;
 };
 /** @hidden */
-export declare type ContinuableConstructorParams = {
+export type ContinuableConstructorParams = {
     client: Client;
     strictContinuationCheck?: boolean;
 };

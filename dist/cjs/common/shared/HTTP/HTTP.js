@@ -50,7 +50,7 @@ class HTTP {
         return __awaiter(this, void 0, void 0, function* () {
             const options = Object.assign(Object.assign(Object.assign({}, partialOptions), this.defaultFetchOptions), { headers: Object.assign(Object.assign(Object.assign(Object.assign({}, this.defaultHeaders), { cookie: this.cookie, referer: `https://${this.baseUrl}/` }), partialOptions.headers), this.defaultFetchOptions.headers), body: partialOptions.data ? JSON.stringify(partialOptions.data) : undefined });
             const finalUrl = `https://${this.baseUrl}/${url}?${new url_1.URLSearchParams(partialOptions.params)}`;
-            const response = yield node_fetch_1.default(finalUrl, options);
+            const response = yield (0, node_fetch_1.default)(finalUrl, options);
             const data = yield response.json();
             this.parseCookie(response);
             return { data };

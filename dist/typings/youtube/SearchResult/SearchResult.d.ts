@@ -2,7 +2,7 @@ import { BaseChannel } from "../BaseChannel";
 import { Continuable, ContinuableConstructorParams, FetchResult } from "../Continuable";
 import { PlaylistCompact } from "../PlaylistCompact";
 import { VideoCompact } from "../VideoCompact";
-export declare type SearchOptions = {
+export type SearchOptions = {
     type?: SearchType;
     duration?: SearchDuration;
     uploadDate?: SearchUploadDate;
@@ -51,12 +51,12 @@ export declare namespace SearchEnum {
         Location = "location"
     }
 }
-export declare type SearchUploadDate = "all" | "hour" | "today" | "week" | "month" | "year" | SearchEnum.UploadDate;
-export declare type SearchType = "all" | "video" | "channel" | "playlist" | SearchEnum.Type;
-export declare type SearchDuration = "all" | "short" | "medium" | "long" | SearchEnum.Duration;
-export declare type SearchSort = "relevance" | "rating" | "date" | "view" | SearchEnum.Sort;
-export declare type SearchFeature = "live" | "4k" | "hd" | "subtitles" | "creativeCommons" | "360" | "vr180" | "3d" | "hdr" | "location" | SearchEnum.Feature;
-export declare type SearchResultItem<T = "all"> = T extends "video" | VideoCompact ? VideoCompact : T extends "channel" | BaseChannel ? BaseChannel : T extends "playlist" | PlaylistCompact ? PlaylistCompact : VideoCompact | BaseChannel | PlaylistCompact;
+export type SearchUploadDate = "all" | "hour" | "today" | "week" | "month" | "year" | SearchEnum.UploadDate;
+export type SearchType = "all" | "video" | "channel" | "playlist" | SearchEnum.Type;
+export type SearchDuration = "all" | "short" | "medium" | "long" | SearchEnum.Duration;
+export type SearchSort = "relevance" | "rating" | "date" | "view" | SearchEnum.Sort;
+export type SearchFeature = "live" | "4k" | "hd" | "subtitles" | "creativeCommons" | "360" | "vr180" | "3d" | "hdr" | "location" | SearchEnum.Feature;
+export type SearchResultItem<T = "all"> = T extends "video" | VideoCompact ? VideoCompact : T extends "channel" | BaseChannel ? BaseChannel : T extends "playlist" | PlaylistCompact ? PlaylistCompact : VideoCompact | BaseChannel | PlaylistCompact;
 /**
  * Represents search result, usually returned from `client.search();`.
  *

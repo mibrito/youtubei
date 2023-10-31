@@ -1,5 +1,5 @@
 /// <reference types="node" />
-export declare type TranscriptParams = {
+export type TranscriptParams = {
     TranscriptParams: {
         videoId: string;
     };
