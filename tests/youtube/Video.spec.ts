@@ -32,6 +32,8 @@ describe("Video", () => {
 		expect(video.isLiveContent).toBeFalse();
 		expect(video.tags.length).toBe(1);
 		expect(video.tags[0]).toBe("#FramesWinGames");
+		expect(video.keywords.length).toBe(12);
+		expect(video.keywords[0]).toBe("nvidia");
 		expect(video.related.items.length).toBeGreaterThan(0);
 	});
 

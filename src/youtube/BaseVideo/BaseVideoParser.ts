@@ -16,6 +16,8 @@ export class BaseVideoParser {
 		target.viewCount = +videoInfo.videoDetails.viewCount || null;
 		target.isLiveContent = videoInfo.videoDetails.isLiveContent;
 		target.thumbnails = new Thumbnails().load(videoInfo.videoDetails.thumbnail.thumbnails);
+		target.description = videoInfo.videoDetails.shortDescription;
+		target.keywords = videoInfo.videoDetails.keywords;
 
 		// Channel
 		const { title, thumbnail, subscriberCountText } = videoInfo.owner.videoOwnerRenderer;
@@ -37,8 +39,6 @@ export class BaseVideoParser {
 			videoInfo.superTitleLink?.runs
 				?.map((r: YoutubeRawData) => r.text.trim())
 				.filter((t: string) => t) || [];
-		target.description =
-			videoInfo.description?.runs.map((d: Record<string, string>) => d.text).join("") || "";
 
 		// related videos
 		const secondaryContents =

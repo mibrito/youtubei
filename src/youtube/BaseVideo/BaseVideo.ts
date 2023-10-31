@@ -18,6 +18,7 @@ export interface BaseVideoProperties extends BaseProperties {
 	likeCount?: number | null;
 	isLiveContent?: boolean;
 	tags?: string[];
+	keywords?: string[];
 }
 
 /** Represents a Video  */
@@ -41,6 +42,8 @@ export class BaseVideo extends Base implements BaseVideoProperties {
 	isLiveContent!: boolean;
 	/** The tags of this video */
 	tags!: string[];
+	/** The keywords of this video */
+	keywords!: string[];
 	/** Continuable of videos / playlists related to this video  */
 	related: VideoRelated;
 
