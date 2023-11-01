@@ -1,6 +1,6 @@
 import "jest-extended";
 
-import { Client, Video } from "../../src";
+import { Client, ParsingError, Video } from "../../src";
 import { commonBaseChannelTest } from "./CommonBaseChannel.spec";
 
 const youtube = new Client({ youtubeClientOptions: { hl: "en" } });
@@ -35,6 +35,14 @@ describe("Video", () => {
 		expect(video.keywords.length).toBe(12);
 		expect(video.keywords[0]).toBe("nvidia");
 		expect(video.related.items.length).toBeGreaterThan(0);
+	});
+
+	it("error parsing missing data", async () => {
+		try {
+			const videoParsingError = await youtube.getVideo("Wh7o07uYWS0");
+		} catch (error) {
+			expect(error).toBeInstanceOf(ParsingError);
+		}
 	});
 
 	it("load video comments", async () => {

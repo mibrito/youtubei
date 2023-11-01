@@ -1,4 +1,4 @@
-import { getContinuationFromItems, stripToInt, Thumbnails, YoutubeRawData } from "../../common";
+import { getContinuationFromItems, ParsingError, stripToInt, Thumbnails, YoutubeRawData } from "../../common";
 import { BaseChannel } from "../BaseChannel";
 import { Client } from "../Client";
 import { PlaylistCompact } from "../PlaylistCompact";
@@ -74,7 +74,11 @@ export class BaseVideoParser {
 
 	static parseRawData(data: YoutubeRawData): YoutubeRawData {
 		const contents =
-			data[3].response.contents.twoColumnWatchNextResults.results.results.contents;
+			data[3].response.contents?.twoColumnWatchNextResults.results.results.contents;
+
+		if (contents === undefined) {
+			throw new ParsingError("Data missing contents: data[3].response.contents");
+		}
 
 		const primaryInfo = contents.find((c: YoutubeRawData) => "videoPrimaryInfoRenderer" in c)
 			.videoPrimaryInfoRenderer;
