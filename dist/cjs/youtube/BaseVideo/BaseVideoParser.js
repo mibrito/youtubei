@@ -50,7 +50,11 @@ class BaseVideoParser {
         return (0, common_1.getContinuationFromItems)(secondaryContents);
     }
     static parseRawData(data) {
-        const contents = data[3].response.contents.twoColumnWatchNextResults.results.results.contents;
+        var _a;
+        const contents = (_a = data[3].response.contents) === null || _a === void 0 ? void 0 : _a.twoColumnWatchNextResults.results.results.contents;
+        if (contents === undefined) {
+            throw new common_1.ParsingError("Data missing contents: data[3].response.contents");
+        }
         const primaryInfo = contents.find((c) => "videoPrimaryInfoRenderer" in c)
             .videoPrimaryInfoRenderer;
         const secondaryInfo = contents.find((c) => "videoSecondaryInfoRenderer" in c).videoSecondaryInfoRenderer;

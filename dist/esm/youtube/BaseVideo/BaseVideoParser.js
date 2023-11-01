@@ -9,7 +9,7 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
-import { getContinuationFromItems, stripToInt, Thumbnails } from "../../common";
+import { getContinuationFromItems, ParsingError, stripToInt, Thumbnails } from "../../common";
 import { BaseChannel } from "../BaseChannel";
 import { PlaylistCompact } from "../PlaylistCompact";
 import { VideoCompact } from "../VideoCompact";
@@ -60,7 +60,11 @@ var BaseVideoParser = /** @class */ (function () {
         return getContinuationFromItems(secondaryContents);
     };
     BaseVideoParser.parseRawData = function (data) {
-        var contents = data[3].response.contents.twoColumnWatchNextResults.results.results.contents;
+        var _a;
+        var contents = (_a = data[3].response.contents) === null || _a === void 0 ? void 0 : _a.twoColumnWatchNextResults.results.results.contents;
+        if (contents === undefined) {
+            throw new ParsingError("Data missing contents: data[3].response.contents");
+        }
         var primaryInfo = contents.find(function (c) { return "videoPrimaryInfoRenderer" in c; })
             .videoPrimaryInfoRenderer;
         var secondaryInfo = contents.find(function (c) { return "videoSecondaryInfoRenderer" in c; }).videoSecondaryInfoRenderer;
