@@ -52,7 +52,9 @@ class BaseVideoParser {
     static parseRawData(data) {
         var _a;
         const contents = (_a = data[3].response.contents) === null || _a === void 0 ? void 0 : _a.twoColumnWatchNextResults.results.results.contents;
-        if (contents === undefined) {
+        if (contents === undefined
+            || contents
+                .find((c) => "videoPrimaryInfoRenderer" in c) === undefined) {
             throw new common_1.ParsingError("Data missing contents: data[3].response.contents");
         }
         const primaryInfo = contents.find((c) => "videoPrimaryInfoRenderer" in c)

@@ -62,7 +62,9 @@ var BaseVideoParser = /** @class */ (function () {
     BaseVideoParser.parseRawData = function (data) {
         var _a;
         var contents = (_a = data[3].response.contents) === null || _a === void 0 ? void 0 : _a.twoColumnWatchNextResults.results.results.contents;
-        if (contents === undefined) {
+        if (contents === undefined
+            || contents
+                .find(function (c) { return "videoPrimaryInfoRenderer" in c; }) === undefined) {
             throw new ParsingError("Data missing contents: data[3].response.contents");
         }
         var primaryInfo = contents.find(function (c) { return "videoPrimaryInfoRenderer" in c; })
