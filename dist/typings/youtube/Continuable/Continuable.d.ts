@@ -18,7 +18,7 @@ export declare abstract class Continuable<T> extends Base {
     /** @hidden */
     constructor({ client, strictContinuationCheck }: ContinuableConstructorParams);
     /** Fetch next items using continuation token */
-    next(count?: number): Promise<T[]>;
+    next(count?: number, sleepTime?: null): Promise<T[]>;
     protected abstract fetch(): Promise<FetchResult<T>>;
     private get hasContinuation();
 }

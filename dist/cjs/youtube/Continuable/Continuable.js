@@ -11,6 +11,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Continuable = void 0;
 const Base_1 = require("../Base");
+/** @hidden */
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 /** Represents a continuable list of items `T` (like pagination) */
 class Continuable extends Base_1.Base {
     /** @hidden */
@@ -22,12 +26,15 @@ class Continuable extends Base_1.Base {
             this.continuation = null;
     }
     /** Fetch next items using continuation token */
-    next(count = 1) {
+    next(count = 1, sleepTime = null) {
         return __awaiter(this, void 0, void 0, function* () {
             const newItems = [];
             for (let i = 0; i < count || count == 0; i++) {
                 if (!this.hasContinuation)
                     break;
+                if (sleepTime !== null) {
+                    yield delay(sleepTime);
+                }
                 const { items, continuation } = yield this.fetch();
                 this.continuation = continuation;
                 newItems.push(...items);

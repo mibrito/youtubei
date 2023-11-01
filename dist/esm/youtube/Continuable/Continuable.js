@@ -75,6 +75,10 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     return to.concat(ar || Array.prototype.slice.call(from));
 };
 import { Base } from "../Base";
+/** @hidden */
+function delay(ms) {
+    return new Promise(function (resolve) { return setTimeout(resolve, ms); });
+}
 /** Represents a continuable list of items `T` (like pagination) */
 var Continuable = /** @class */ (function (_super) {
     __extends(Continuable, _super);
@@ -89,8 +93,9 @@ var Continuable = /** @class */ (function (_super) {
         return _this;
     }
     /** Fetch next items using continuation token */
-    Continuable.prototype.next = function (count) {
+    Continuable.prototype.next = function (count, sleepTime) {
         if (count === void 0) { count = 1; }
+        if (sleepTime === void 0) { sleepTime = null; }
         return __awaiter(this, void 0, void 0, function () {
             var newItems, i, _a, items, continuation;
             var _b;
@@ -101,19 +106,24 @@ var Continuable = /** @class */ (function (_super) {
                         i = 0;
                         _c.label = 1;
                     case 1:
-                        if (!(i < count || count == 0)) return [3 /*break*/, 4];
+                        if (!(i < count || count == 0)) return [3 /*break*/, 6];
                         if (!this.hasContinuation)
-                            return [3 /*break*/, 4];
-                        return [4 /*yield*/, this.fetch()];
+                            return [3 /*break*/, 6];
+                        if (!(sleepTime !== null)) return [3 /*break*/, 3];
+                        return [4 /*yield*/, delay(sleepTime)];
                     case 2:
+                        _c.sent();
+                        _c.label = 3;
+                    case 3: return [4 /*yield*/, this.fetch()];
+                    case 4:
                         _a = _c.sent(), items = _a.items, continuation = _a.continuation;
                         this.continuation = continuation;
                         newItems.push.apply(newItems, __spreadArray([], __read(items), false));
-                        _c.label = 3;
-                    case 3:
+                        _c.label = 5;
+                    case 5:
                         i++;
                         return [3 /*break*/, 1];
-                    case 4:
+                    case 6:
                         (_b = this.items).push.apply(_b, __spreadArray([], __read(newItems), false));
                         return [2 /*return*/, newItems];
                 }
