@@ -76,7 +76,11 @@ export class BaseVideoParser {
 		const contents =
 			data[3].response.contents?.twoColumnWatchNextResults.results.results.contents;
 
-		if (contents === undefined) {
+		
+
+		if (contents === undefined
+			|| contents
+				.find((c: YoutubeRawData) => "videoPrimaryInfoRenderer" in c) === undefined) {
 			throw new ParsingError("Data missing contents: data[3].response.contents");
 		}
 
