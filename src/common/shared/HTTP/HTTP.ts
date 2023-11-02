@@ -1,4 +1,4 @@
-import fetch, { HeadersInit, RequestInit, Response as FetchResponse } from "node-fetch";
+import fetch, { Response as FetchResponse, HeadersInit, RequestInit } from "node-fetch";
 import { URLSearchParams } from "url";
 
 type HTTPOptions = {
@@ -9,7 +9,6 @@ type HTTPOptions = {
 	fetchOptions?: Partial<RequestInit>;
 	youtubeClientOptions?: Record<string, unknown>;
 	initialCookie?: string;
-	defaultHeaders?: HeadersInit;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -45,8 +44,7 @@ export class HTTP {
 			"x-youtube-client-version": this.clientVersion,
 			"x-youtube-client-name": "1",
 			"content-type": "application/json",
-			"accept-encoding": "gzip, deflate, br",
-			...options.defaultHeaders
+			"accept-encoding": "gzip, deflate, br"
 		};
 		this.defaultFetchOptions = options.fetchOptions || {};
 		this.defaultClientOptions = options.youtubeClientOptions || {};
@@ -99,7 +97,7 @@ export class HTTP {
 		const finalUrl = `https://${this.baseUrl}/${url}?${new URLSearchParams(
 			partialOptions.params
 		)}`;
-
+		console.dir(options)
 		const response = await fetch(finalUrl, options);
 		const data = await response.json();
 		this.parseCookie(response);
