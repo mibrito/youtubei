@@ -39,7 +39,7 @@ export abstract class Continuable<T> extends Base {
 		for (let i = 0; i < count || count == 0; i++) {
 			if (!this.hasContinuation) break;
 			if (sleepTime !== null) {
-				await delay(sleepTime)
+				await delay(sleepTime ?? 0)
 			}
 			const { items, continuation } = await this.fetch();
 			this.continuation = continuation;
