@@ -97,7 +97,7 @@ export class HTTP {
 		const finalUrl = `https://${this.baseUrl}/${url}?${new URLSearchParams(
 			partialOptions.params
 		)}`;
-		console.dir(options)
+
 		const response = await fetch(finalUrl, options);
 		const data = await response.json();
 		this.parseCookie(response);

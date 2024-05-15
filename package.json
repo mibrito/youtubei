@@ -62,6 +62,7 @@
 	},
 	"homepage": "https://suspiciouslookingowl.github.io/youtubei",
 	"dependencies": {
+		"https-proxy-agent": "^7.0.2",
 		"node-fetch": "2.6.7",
 		"protocol-buffers": "5.0.0"
 	}
