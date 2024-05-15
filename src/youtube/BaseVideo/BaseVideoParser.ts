@@ -1,9 +1,10 @@
-import { getContinuationFromItems, ParsingError, stripToInt, Thumbnails, YoutubeRawData } from "../../common";
+import { getContinuationFromItems, stripToInt, Thumbnails, YoutubeRawData } from "../../common";
 import { BaseChannel } from "../BaseChannel";
 import { Client } from "../Client";
 import { PlaylistCompact } from "../PlaylistCompact";
 import { VideoCompact } from "../VideoCompact";
 import { BaseVideo } from "./BaseVideo";
+import { VideoCaptions } from "./VideoCaptions";
 
 export class BaseVideoParser {
 	static loadBaseVideo(target: BaseVideo, data: YoutubeRawData): BaseVideo {
@@ -39,13 +40,12 @@ export class BaseVideoParser {
 			videoInfo.superTitleLink?.runs
 				?.map((r: YoutubeRawData) => r.text.trim())
 				.filter((t: string) => t) || [];
+		target.description = videoInfo.videoDetails.shortDescription || "";
 
 		// related videos
 		const secondaryContents =
-			data[3].response.contents.twoColumnWatchNextResults
-				?.secondaryResults
-				?.secondaryResults
-				?.results;
+			data.response.contents.twoColumnWatchNextResults.secondaryResults?.secondaryResults
+				.results;
 
 		if (secondaryContents) {
 			target.related.items = BaseVideoParser.parseRelatedFromSecondaryContent(
@@ -53,6 +53,13 @@ export class BaseVideoParser {
 				target.client
 			);
 			target.related.continuation = getContinuationFromItems(secondaryContents);
+		}
+
+		// captions
+		if (videoInfo.captions) {
+			target.captions = new VideoCaptions({ client: target.client, video: target }).load(
+				videoInfo.captions.playerCaptionsTracklistRenderer
+			);
 		}
 
 		return target;
@@ -73,24 +80,15 @@ export class BaseVideoParser {
 	}
 
 	static parseRawData(data: YoutubeRawData): YoutubeRawData {
-		const contents =
-			data[3].response.contents?.twoColumnWatchNextResults.results.results.contents;
-
-		
-
-		if (contents === undefined
-			|| contents
-				.find((c: YoutubeRawData) => "videoPrimaryInfoRenderer" in c) === undefined) {
-			throw new ParsingError("Data missing contents: data[3].response.contents");
-		}
+		const contents = data.response.contents.twoColumnWatchNextResults.results.results.contents;
 
 		const primaryInfo = contents.find((c: YoutubeRawData) => "videoPrimaryInfoRenderer" in c)
 			.videoPrimaryInfoRenderer;
 		const secondaryInfo = contents.find(
 			(c: YoutubeRawData) => "videoSecondaryInfoRenderer" in c
 		).videoSecondaryInfoRenderer;
-		const videoDetails = data[2].playerResponse.videoDetails;
-		return { ...secondaryInfo, ...primaryInfo, videoDetails };
+		const { videoDetails, captions } = data.playerResponse;
+		return { ...secondaryInfo, ...primaryInfo, videoDetails, captions };
 	}
 
 	private static parseCompactRenderer(
@@ -114,18 +112,25 @@ export class BaseVideoParser {
 	}
 
 	private static parseButtonRenderer(data: YoutubeRawData): string {
-		let buttonRenderer;
-		if (!data.segmentedLikeDislikeButtonRenderer) {
-			buttonRenderer = data.toggleButtonRenderer || data.buttonRenderer;
-		} else {
+		let likeCount;
+		if (data.toggleButtonRenderer || data.buttonRenderer) {
+			const buttonRenderer = data.toggleButtonRenderer || data.buttonRenderer;
+			likeCount = (
+				buttonRenderer.defaultText?.accessibility || buttonRenderer.accessibilityData
+			).accessibilityData;
+		} else if (data.segmentedLikeDislikeButtonRenderer) {
 			const likeButton = data.segmentedLikeDislikeButtonRenderer.likeButton;
-			buttonRenderer = likeButton.toggleButtonRenderer || likeButton.buttonRenderer;
+			const buttonRenderer = likeButton.toggleButtonRenderer || likeButton.buttonRenderer;
+			likeCount = (
+				buttonRenderer.defaultText?.accessibility || buttonRenderer.accessibilityData
+			).accessibilityData;
+		} else if (data.segmentedLikeDislikeButtonViewModel) {
+			likeCount =
+				data.segmentedLikeDislikeButtonViewModel.likeButtonViewModel.likeButtonViewModel
+					.toggleButtonViewModel.toggleButtonViewModel.defaultButtonViewModel
+					.buttonViewModel.accessibilityText;
 		}
 
-		const accessibilityData = (
-			buttonRenderer.defaultText?.accessibility || buttonRenderer.accessibilityData
-		).accessibilityData;
-
-		return accessibilityData.label;
+		return likeCount;
 	}
 }
